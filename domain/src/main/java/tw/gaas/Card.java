@@ -10,7 +10,7 @@ public abstract class Card {
 
     public abstract boolean validate(Card card);
 
-    public enum Color{
-        blue,red,yellow,green
+    public enum Color {
+        BLUE, RED, YELLOW, GREEN
     }
 }
