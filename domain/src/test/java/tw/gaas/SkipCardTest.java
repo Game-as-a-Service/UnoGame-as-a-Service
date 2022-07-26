@@ -8,14 +8,14 @@ class SkipCardTest {
 
     @Test
     public void givenTopCardBlueSkipCard_whenShowCardBlueSkipCard_thenShouldBeSuccess(){
-        Card topCard = new SkipCard(Card.Color.blue);
-        Card showCard = new SkipCard(Card.Color.blue);
+        Card topCard = new SkipCard(Card.Color.BLUE);
+        Card showCard = new SkipCard(Card.Color.BLUE);
         assertTrue(showCard.validate(topCard));
     }
     @Test
     public void givenTopCardBlueSkipCard_whenShowCardRedSkipCard_thenShouldBeFail(){
-        Card topCard = new SkipCard(Card.Color.blue);
-        Card showCard = new SkipCard(Card.Color.red);
+        Card topCard = new SkipCard(Card.Color.BLUE);
+        Card showCard = new SkipCard(Card.Color.RED);
         assertFalse(showCard.validate(topCard));
     }
 }

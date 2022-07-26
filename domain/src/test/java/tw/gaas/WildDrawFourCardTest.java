@@ -8,14 +8,14 @@ class WildDrawFourCardTest {
 
     @Test
     public void givenTopCardBlueWildDrawFourCard_whenShowCardBlueWildDrawFourCard_thenShouldBeSuccess(){
-        Card topCard = new WildDrawFourCard(Card.Color.blue);
-        Card showCard = new WildDrawFourCard(Card.Color.blue);
+        Card topCard = new WildDrawFourCard(Card.Color.BLUE);
+        Card showCard = new WildDrawFourCard(Card.Color.BLUE);
         assertTrue(showCard.validate(topCard));
     }
     @Test
     public void givenTopCardBlueWildDrawFourCard_whenShowCardRedWildDrawFourCard_thenShouldBeFail(){
-        Card topCard = new WildDrawFourCard(Card.Color.blue);
-        Card showCard = new WildDrawFourCard(Card.Color.red);
+        Card topCard = new WildDrawFourCard(Card.Color.BLUE);
+        Card showCard = new WildDrawFourCard(Card.Color.RED);
         assertFalse(showCard.validate(topCard));
     }
 }

@@ -8,14 +8,14 @@ class ReverseCardTest {
 
 @Test
 public void givenTopCardBlueReverseCard_whenShowCardBlueReverseCard_thenShouldBeSuccess(){
-    ReverseCard topCard = new ReverseCard(Card.Color.blue);
-    ReverseCard showCard = new ReverseCard(Card.Color.blue);
+    ReverseCard topCard = new ReverseCard(Card.Color.BLUE);
+    ReverseCard showCard = new ReverseCard(Card.Color.BLUE);
     assertTrue(showCard.validate(topCard));
 }
 @Test
 public void givenTopCardBlueReverseCard_whenShowCardGreenReverseCard_thenShouldBeFail(){
-    ReverseCard topCard = new ReverseCard(Card.Color.blue);
-    ReverseCard showCard = new ReverseCard(Card.Color.green);
+    ReverseCard topCard = new ReverseCard(Card.Color.BLUE);
+    ReverseCard showCard = new ReverseCard(Card.Color.GREEN);
     assertFalse(showCard.validate(topCard));
 }
 }
