@@ -1,20 +1,18 @@
 package tw.gaas;
 
-public class NumberCard extends Card{
-    private final int  number;
+public class NumberCard extends ColorCard {
+    private final Number number;
 
-    public NumberCard(Color color, int number) {
+    public NumberCard(Color color, Number number) {
         super(color);
         this.number = number;
     }
-    public boolean validate(Card topCard) {
-        if(topCard instanceof NumberCard){
-            return this.color.equals(topCard.color)||this.number==((NumberCard) topCard).number;
-        }
-       return false;
-    }
 
-    public int getNumber() {
+    public Number getNumber() {
         return number;
     }
+}
+
+enum Number {
+    ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE
 }
