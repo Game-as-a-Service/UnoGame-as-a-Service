@@ -1,21 +1,20 @@
 package tw.gaas;
 
 import org.junit.jupiter.api.Test;
-
-import java.util.Stack;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static tw.gaas.Color.*;
+import static tw.gaas.Color.RED;
 
 class DeckTest {
     @Test
     public void givenUnoGameInit_whenGetStandard108Cards_thenHas19RedNumberCard() {
-        Stack<Card> cards = Deck.standard108Cards().getCards();
+        Stream<Card> drawPile= Deck.standard108Cards().stream();
 
-        int size = (int) cards.stream()
+        int size = (int) drawPile
                 .filter(NumberCard.class::isInstance)
                 .map(NumberCard.class::cast)
-                .filter(colorCard -> colorCard.getColor() == RED)
+                .filter(numberCard -> numberCard.getColor() == RED)
                 .count();
         assertEquals(19, size);
     }

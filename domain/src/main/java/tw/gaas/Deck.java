@@ -1,12 +1,11 @@
 package tw.gaas;
 
 import java.util.Stack;
+import java.util.stream.Stream;
 
 public class Deck {
     private static final int DOUBLE_CARDS = 2;
-    private final Stack<Card> cards = new Stack<>();
-    private static final Number[] numbers = Number.values();
-    private static final Color[] colors = Color.values();
+    private final Stack<Card> drawPile = new Stack<>();
 
     public static Deck standard108Cards() {
         Deck deck = new Deck();
@@ -15,14 +14,11 @@ public class Deck {
     }
 
     private static void createColorCard(Deck deck) {
+        Color[] colors = Color.values();
         for (Color color : colors) {
             createDoubleCards(deck, color);
-            createNumber0Card(deck, color);
+            deck.drawPile.push(new NumberCard(color, Number.ZERO));
         }
-    }
-
-    private static void createNumber0Card(Deck deck, Color color) {
-        deck.cards.push(new NumberCard(color, Number.ZERO));
     }
 
     private static void createDoubleCards(Deck deck, Color color) {
@@ -32,13 +28,13 @@ public class Deck {
     }
 
     private static void createNumber1To9Cards(Deck deck, Color color) {
-        for (int i = 1; i < Deck.numbers.length; i++) {
-            deck.cards.push(new NumberCard(color, Deck.numbers[i]));
+            Number[] numbers = Number.values();
+        for (int i = 1; i < numbers.length; i++) {
+            deck.drawPile.push(new NumberCard(color, numbers[i]));
         }
     }
 
-
-    public Stack<Card> getCards() {
-        return cards;
+    public Stream<Card> stream(){
+        return drawPile.stream();
     }
 }
