@@ -9,7 +9,7 @@ import static tw.gaas.Color.RED;
 
 class DeckTest {
     @Test
-    public void givenUnoGameInit_whenGetStandard108Cards_thenHas19RedNumberCard() {
+    public void givenUnoGameInit_whenGetStandard108Cards_thenHas19RedNumberCardShouldBeSuccess() {
         Stream<Card> drawPileStream = Deck.standard108Cards().stream();
 
         int size = (int) drawPileStream
