@@ -7,70 +7,73 @@ import static tw.gaas.Color.*;
 
 class DeckTest {
 
+    private static final int EACH_NON_ZERO_COLOR_CARDS_AMOUNT = 2;
+    private static  final int NUMBER_CARDS_AMOUNT = 19;
+    private static final int WILD_CARDS_AND_WILD_DRAW_FOUR_CARDS_AMOUNT = 4;
 
     @Test
-    public void givenUnoGameInit_whenGetStandard108Cards_thenHas19RedNumberCard() {
+    public void whenGetStandard108Cards_thenHas19RedNumberCard() {
         int counts = getColorCardsCounts(NumberCard.class, RED);
-        assertEquals(19, counts);
+        assertEquals(NUMBER_CARDS_AMOUNT, counts);
     }
 
     @Test
-    public void givenUnoGameInit_whenGetStandard108Cards_thenHas19GreenNumberCard() {
+    public void whenGetStandard108Cards_thenHas19GreenNumberCard() {
         int counts = getColorCardsCounts(NumberCard.class, GREEN);
-        assertEquals(19, counts);
+        assertEquals(NUMBER_CARDS_AMOUNT, counts);
     }
 
     @Test
-    public void givenUnoGameInit_whenGetStandard108Cards_thenHas19YellowNumberCard() {
+    public void whenGetStandard108Cards_thenHas19YellowNumberCard() {
         int counts = getColorCardsCounts(NumberCard.class, YELLOW);
-        assertEquals(19, counts);
+        assertEquals(NUMBER_CARDS_AMOUNT, counts);
     }
 
     @Test
-    public void givenUnoGameInit_whenGetStandard108Cards_thenHas19BlueNumberCard() {
+    public void whenGetStandard108Cards_thenHas19BlueNumberCard() {
         int counts = getColorCardsCounts(NumberCard.class, BLUE);
-        assertEquals(19, counts);
+        assertEquals(NUMBER_CARDS_AMOUNT, counts);
     }
 
     @Test
-    public void givenUnoGameInit_whenGetStandard108Cards_thenHas2ReverseCardsShouldBeSuccess() {
+    public void whenGetStandard108Cards_thenHas2ReverseCardsShouldBeSuccess() {
         for (Color color : values()) {
             int counts = getColorCardsCounts(ReverseCard.class, color);
-            assertEquals(2, counts);
+            assertEquals(EACH_NON_ZERO_COLOR_CARDS_AMOUNT, counts);
         }
     }
 
     @Test
-    public void givenUnoGameInit_whenGetStandard108Cards_thenHas2SkipCardsShouldBeSuccess() {
+    public void whenGetStandard108Cards_thenHas2SkipCardsShouldBeSuccess() {
         for (Color color : values()) {
             int counts = getColorCardsCounts(SkipCard.class, color);
-            assertEquals(2, counts);
+            assertEquals(EACH_NON_ZERO_COLOR_CARDS_AMOUNT, counts);
         }
     }
 
 
     @Test
-    public void givenUnoGameInit_whenGetStandard108Cards_thenHas2DrawTwoCardsShouldBeSuccess() {
+    public void whenGetStandard108Cards_thenHas2DrawTwoCardsShouldBeSuccess() {
         for (Color color : values()) {
             int counts = getColorCardsCounts(DrawTwoCard.class, color);
-            assertEquals(2, counts);
+            assertEquals(EACH_NON_ZERO_COLOR_CARDS_AMOUNT, counts);
         }
     }
 
     @Test
-    public void givenUnoGameInit_whenGetStandard108Cards_thenHas4WildCardsShouldBeSuccess() {
+    public void whenGetStandard108Cards_thenHas4WildCardsShouldBeSuccess() {
         int counts = (int) Deck.standard108Cards().stream()
                 .filter(WildCard.class::isInstance)
                 .map(WildCard.class::cast).count();
-        assertEquals(4, counts);
+        assertEquals(WILD_CARDS_AND_WILD_DRAW_FOUR_CARDS_AMOUNT, counts);
     }
 
     @Test
-    public void givenUnoGameInit_whenGetStandard108Cards_thenHas4WildDrawFourCardsShouldBeSuccess() {
+    public void whenGetStandard108Cards_thenHas4WildDrawFourCardsShouldBeSuccess() {
         int counts = (int) Deck.standard108Cards().stream()
                 .filter(WildDrawFourCard.class::isInstance)
                 .map(WildDrawFourCard.class::cast).count();
-        assertEquals(4, counts);
+        assertEquals(WILD_CARDS_AND_WILD_DRAW_FOUR_CARDS_AMOUNT, counts);
     }
 
 
@@ -83,11 +86,11 @@ class DeckTest {
     }
 
     @Test
-    public void givenUnoGameInit_whenGetStandard108Cards_thenNumberCardsShouldBeSuccess() {
+    public void whenGetStandard108Cards_thenNumberCardsShouldBeSuccess() {
         Number[] numbers = Number.values();
         for (Color color : values()) {
             for (int i = 1; i < numbers.length; i++) {
-                assertEquals(2, getNumberCardsCounts(color, numbers[i]));
+                assertEquals(EACH_NON_ZERO_COLOR_CARDS_AMOUNT, getNumberCardsCounts(color, numbers[i]));
             }
             assertEquals(1, getNumberCardsCounts(color, numbers[0]));
         }

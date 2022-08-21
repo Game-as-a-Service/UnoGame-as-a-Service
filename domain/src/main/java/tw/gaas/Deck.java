@@ -6,9 +6,9 @@ import java.util.stream.Stream;
 import static tw.gaas.Number.*;
 
 public class Deck {
-    private static final int DOUBLE_CARDS = 2;
+    private static final int EACH_NON_ZERO_COLOR_CARDS_AMOUNT = 2;
     private final Stack<Card> drawPile = new Stack<>();
-    private static final int QUADRUPLE_CARDS = 4;
+    private static final int WILD_CARDS_AND_WILD_DRAW_FOUR_CARDS_AMOUNT = 4;
 
     public static Deck standard108Cards() {
         Deck deck = new Deck();
@@ -18,7 +18,7 @@ public class Deck {
     }
 
     private static void createQuadrupleCards(Deck deck) {
-        for (int i = 0; i < QUADRUPLE_CARDS; i++) {
+        for (int i = 0; i < WILD_CARDS_AND_WILD_DRAW_FOUR_CARDS_AMOUNT; i++) {
             deck.push(new WildCard());
             deck.push(new WildDrawFourCard());
         }
@@ -37,7 +37,7 @@ public class Deck {
     }
 
     private static void createDoubleCards(Deck deck, Color color) {
-        for (int i = 0; i < DOUBLE_CARDS; i++) {
+        for (int i = 0; i < EACH_NON_ZERO_COLOR_CARDS_AMOUNT; i++) {
             createNumber1To9Cards(deck, color);
             deck.push(new ReverseCard(color));
             deck.push(new SkipCard(color));
