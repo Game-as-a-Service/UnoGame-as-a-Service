@@ -9,8 +9,11 @@ import static tw.gaas.Color.*;
 
 class DeckTest {
     private final Color[] colors = values();
-    private final int NUMBER_CARDS_AMOUNT = 19;
+    private final int EACH_COLOR_NUMBER_CARDS_AMOUNT = 19;
     private static final int EACH_NON_ZERO_COLOR_CARD_AMOUNT = 2;
+    private Stream<Card> getDrawPileStream() {
+        return Deck.standard108Cards().stream();
+    }
 
 //    數字卡 (NumberCard)
 //    牌數 : 每個顏色各有19張牌
@@ -34,41 +37,43 @@ class DeckTest {
 
     @Test
     public void whenGetStandard108Cards_thenHas19RedNumberCardsShouldBeSuccess() {
-        assertEquals(NUMBER_CARDS_AMOUNT, getNumberCardColorCounts(RED));
+        assertEquals(EACH_COLOR_NUMBER_CARDS_AMOUNT, getNumberCardColorCounts(RED,getDrawPileStream()));
     }
 
     @Test
     public void whenGetStandard108Cards_thenHas19YellowNumberCardsShouldBeSuccess() {
-        assertEquals(NUMBER_CARDS_AMOUNT, getNumberCardColorCounts(YELLOW));
+        assertEquals(EACH_COLOR_NUMBER_CARDS_AMOUNT, getNumberCardColorCounts(YELLOW,getDrawPileStream()));
     }
 
     @Test
     public void whenGetStandard108Cards_thenHas19BlueNumberCardsShouldBeSuccess() {
-        assertEquals(NUMBER_CARDS_AMOUNT, getNumberCardColorCounts(BLUE));
+        assertEquals(EACH_COLOR_NUMBER_CARDS_AMOUNT, getNumberCardColorCounts(BLUE,getDrawPileStream()));
     }
+
     @Test
     public void whenGetStandard108Cards_thenHas19GreenNumberCardsShouldBeSuccess() {
-        assertEquals(NUMBER_CARDS_AMOUNT, getNumberCardColorCounts(GREEN));
+        assertEquals(EACH_COLOR_NUMBER_CARDS_AMOUNT, getNumberCardColorCounts(GREEN,getDrawPileStream()));
     }
+
     @Test
-    public void whenGetStandard108Cards_thenEachColor2SkipCardsShouldBeSuccess() {
+    public void whenGetStandard108Cards_thenEachColorShouldHave2SkipCards() {
         for (Color color : colors) {
-            int counts = getColorCardsCounts(color, SkipCard.class);
+            long counts = getColorCardsCounts(color, SkipCard.class,getDrawPileStream());
             assertEquals(EACH_NON_ZERO_COLOR_CARD_AMOUNT, counts);
         }
     }
 
-    private int getColorCardsCounts(Color color, Class<? extends ColorCard> cardClass) {
-        return (int) Deck.standard108Cards().stream().filter(cardClass::isInstance)
+    private long getColorCardsCounts(Color color, Class<? extends ColorCard> cardClass,Stream<Card> drawPileStream) {
+        return drawPileStream
+                .filter(cardClass::isInstance)
                 .map(cardClass::cast)
                 .filter(colorCard -> colorCard.getColor() == color).count();
     }
 
 
-    private int getNumberCardColorCounts(Color color) {
-        Stream<Card> drawPileStream = Deck.standard108Cards().stream();
+    private long getNumberCardColorCounts(Color color,Stream<Card> drawPileStream) {
 
-        return (int) drawPileStream
+        return drawPileStream
                 .filter(NumberCard.class::isInstance)
                 .map(NumberCard.class::cast)
                 .filter(numberCard -> numberCard.getColor() == color)

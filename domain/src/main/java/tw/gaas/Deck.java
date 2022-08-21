@@ -14,8 +14,7 @@ public class Deck {
     }
 
     private static void createColorCards(Deck deck) {
-        Color[] colors = Color.values();
-        for (Color color : colors) {
+        for (Color color : Color.values()) {
             createNonZeroColorCards(deck, color);
             deck.push(new NumberCard(color, Number.ZERO));
         }
