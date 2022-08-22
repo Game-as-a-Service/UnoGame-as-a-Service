@@ -10,7 +10,7 @@ class DeckTest {
 
     private static final int EACH_NON_ZERO_COLOR_CARDS_AMOUNT = 2;
     private static final int EACH_WILD_CARDS_AND_WILD_DRAW_FOUR_CARDS_AMOUNT = 4;
-    private static Deck deck;
+    private  Deck deck;
 
     @BeforeEach
     void init() {
