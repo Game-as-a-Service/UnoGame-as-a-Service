@@ -9,7 +9,6 @@ import static tw.gaas.Color.*;
 
 class DeckTest {
     private final Color[] colors = values();
-    private final int EACH_COLOR_NUMBER_CARDS_AMOUNT = 19;
     private static final int EACH_NON_ZERO_COLOR_CARD_AMOUNT = 2;
     private Stream<Card> getDrawPileStream() {
         return Deck.standard108Cards().stream();
@@ -36,22 +35,11 @@ class DeckTest {
 
 
     @Test
-    public void whenGetStandard108Cards_thenHas19RedNumberCardsShouldBeSuccess() {
+    public void whenGetStandard108Cards_thenEachColorShouldHave19NumberCards() {
+        int EACH_COLOR_NUMBER_CARDS_AMOUNT = 19;
         assertEquals(EACH_COLOR_NUMBER_CARDS_AMOUNT, getNumberCardColorCounts(RED,getDrawPileStream()));
-    }
-
-    @Test
-    public void whenGetStandard108Cards_thenHas19YellowNumberCardsShouldBeSuccess() {
         assertEquals(EACH_COLOR_NUMBER_CARDS_AMOUNT, getNumberCardColorCounts(YELLOW,getDrawPileStream()));
-    }
-
-    @Test
-    public void whenGetStandard108Cards_thenHas19BlueNumberCardsShouldBeSuccess() {
         assertEquals(EACH_COLOR_NUMBER_CARDS_AMOUNT, getNumberCardColorCounts(BLUE,getDrawPileStream()));
-    }
-
-    @Test
-    public void whenGetStandard108Cards_thenHas19GreenNumberCardsShouldBeSuccess() {
         assertEquals(EACH_COLOR_NUMBER_CARDS_AMOUNT, getNumberCardColorCounts(GREEN,getDrawPileStream()));
     }
 
