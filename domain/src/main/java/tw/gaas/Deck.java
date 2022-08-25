@@ -5,12 +5,21 @@ import java.util.stream.Stream;
 
 public class Deck {
     private static final int EACH_NON_ZERO_COLOR_CARD_AMOUNT = 2;
+    private static final int EACH_WILD_CARD_AND_WILD_DRAW_FOUR_CARD_AMOUNT = 4;
     private final Stack<Card> drawPile = new Stack<>();
 
     public static Deck standard108Cards() {
         Deck deck = new Deck();
         createColorCards(deck);
+        createWildCardsAndWildDrawFourCards(deck);
         return deck;
+    }
+
+    private static void createWildCardsAndWildDrawFourCards(Deck deck) {
+        for (int i = 0; i < EACH_WILD_CARD_AND_WILD_DRAW_FOUR_CARD_AMOUNT; i++) {
+            deck.push(new WildCard());
+            deck.push(new WildDrawFourCard());
+        }
     }
 
     private static void createColorCards(Deck deck) {
@@ -22,8 +31,10 @@ public class Deck {
 
     private static void createNonZeroColorCards(Deck deck, Color color) {
         for (int j = 0; j < EACH_NON_ZERO_COLOR_CARD_AMOUNT; j++) {
-            deck.push(new SkipCard(color));
             createNumber1To9Cards(deck, color);
+            deck.push(new SkipCard(color));
+            deck.push(new ReverseCard(color));
+            deck.push(new DrawTwoCard(color));
         }
     }
 
