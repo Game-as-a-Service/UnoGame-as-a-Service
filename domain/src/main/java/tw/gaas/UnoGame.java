@@ -57,7 +57,6 @@ public class UnoGame {
         return turnMoves;
     }
 
-
     public Player decideFirstPlayer() {
         deck = Deck.RedNumber0To9Cards();
         deck.shuffle();

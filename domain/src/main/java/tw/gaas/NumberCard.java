@@ -12,13 +12,10 @@ public class NumberCard extends ColorCard implements Comparable<NumberCard> {
         return number;
     }
 
-
     @Override
     public int compareTo(NumberCard numberCard) {
         return this.getNumber().getPoint() - numberCard.getNumber().getPoint();
     }
-
-
 }
 
 enum Number {
