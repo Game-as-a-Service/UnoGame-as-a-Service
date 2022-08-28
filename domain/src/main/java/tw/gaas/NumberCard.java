@@ -1,6 +1,6 @@
 package tw.gaas;
 
-public class NumberCard extends ColorCard implements Comparable<NumberCard>{
+public class NumberCard extends ColorCard implements Comparable<NumberCard> {
     private final Number number;
 
     public NumberCard(Color color, Number number) {
@@ -14,8 +14,8 @@ public class NumberCard extends ColorCard implements Comparable<NumberCard>{
 
 
     @Override
-    public int compareTo(NumberCard o) {
-        return 0;
+    public int compareTo(NumberCard numberCard) {
+        return this.getNumber().getPoint() - numberCard.getNumber().getPoint();
     }
 
 
