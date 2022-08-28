@@ -45,7 +45,7 @@ public class Deck {
         }
     }
 
-    private void push(Card card) {
+    public void push(Card card) {
         drawPile.push(card);
     }
 

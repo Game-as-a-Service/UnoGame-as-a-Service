@@ -13,5 +13,5 @@ public class ColorCard extends Card {
 }
 
 enum Color {
-    RED,YELLOW,BLUE,GREEN
+    RED, YELLOW, BLUE, GREEN
 }
