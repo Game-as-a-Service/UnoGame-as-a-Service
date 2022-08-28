@@ -1,7 +1,7 @@
 package tw.gaas;
 
 public class TurnMove {
-    private Player player;
+    private final Player player;
     private Card card;
 
     public TurnMove(Player player, Card card) {
@@ -13,10 +13,6 @@ public class TurnMove {
         return player;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
     public Card getCard() {
         return card;
     }
@@ -24,6 +20,7 @@ public class TurnMove {
     public void setCard(Card card) {
         this.card = card;
     }
+
     public NumberCard getNumberCard() {
         return (NumberCard) card;
     }

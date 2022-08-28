@@ -1,9 +1,10 @@
 package tw.gaas;
 
+import java.util.Collections;
 import java.util.Stack;
 import java.util.stream.Stream;
 
-import static tw.gaas.Number.*;
+import static tw.gaas.Number.ZERO;
 
 public class Deck {
     private static final int EACH_NON_ZERO_COLOR_CARDS_AMOUNT = 2;
@@ -48,11 +49,27 @@ public class Deck {
         }
     }
 
+    public static Deck RedNumber0To9Cards() {
+        Deck deck = new Deck();
+        Color color = Color.RED;
+        createNumber1To9Cards(deck, color);
+        deck.push(new NumberCard(color, ZERO));
+        return deck;
+    }
+
     public Stream<Card> stream() {
         return drawPile.stream();
     }
 
     public void push(Card card) {
         drawPile.push(card);
+    }
+
+    public Card dealCard() {
+        return drawPile.pop();
+    }
+
+    public void shuffle() {
+        Collections.shuffle(this.drawPile);
     }
 }

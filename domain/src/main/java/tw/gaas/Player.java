@@ -5,7 +5,7 @@ import java.util.List;
 public class Player {
     private final String id;
     private final String name;
-    private Hand hand;
+    private final Hand hand = new Hand();
 
     public Player(String id, String name) {
         this.id = id;
@@ -18,5 +18,13 @@ public class Player {
 
     public List<Card> getHandCards() {
         return hand.getCards();
+    }
+
+    public void drawCard(Card card) {
+        hand.addCards(card);
+    }
+
+    public String getName() {
+        return name;
     }
 }

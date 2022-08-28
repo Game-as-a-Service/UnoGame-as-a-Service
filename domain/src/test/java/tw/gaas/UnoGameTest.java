@@ -1,28 +1,21 @@
 package tw.gaas;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
-import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import static java.util.Arrays.asList;
 import static java.util.Collections.max;
 import static java.util.Comparator.comparing;
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.stream.Stream;
+import static tw.gaas.Direction.CLOCKWISE;
+import static tw.gaas.Direction.COUNTERCLOCKWISE;
 
 class UnoGameTest {
 
-    private UnoGame unoGame;
+    private final UnoGame unoGame = new UnoGame();
 
-    @BeforeEach
-    public void init() {
-        this.unoGame = new UnoGame(Deck.standard108Cards());
-    }
-
-    //當遊戲開始時，建立四位玩家
     @Test
     public void givenUnoGameCreated_whenFourPlayersJoinGame_thenGameShouldHaveFourPlayers() {
         List<Player> expectedPlayers = generatePlayers(4);
@@ -35,72 +28,69 @@ class UnoGameTest {
     public void givenUnoGameCreated_whenFivePlayersJoinGame_thenGameShouldFail() {
         List<Player> expectedPlayers = generatePlayers(5);
 
-        assertThrows(IllegalStateException.class, () -> expectedPlayers.forEach(unoGame::join));
+        assertThrows(IllegalStateException.class, () -> joinGame(expectedPlayers));
     }
 
     @Test
     public void givenThreePlayersJoinUnoGame_whenUnoGameStart_thenGameShouldFail() {
-        List<Player> expectedPlayers = generatePlayers(3);
-        joinGame(expectedPlayers);
+        givenFourPlayersJoinUnoGame(3);
 
-        assertThrows(IllegalStateException.class, () -> unoGame.start());
+        assertThrows(IllegalStateException.class, unoGame::start);
     }
-
 
     @Test
     public void givenFourPlayersJoinUnoGame_whenUnoGameStart_thenGameShouldSuccess() {
-        List<Player> expectedPlayers = generatePlayers(4);
-        joinGame(expectedPlayers);
-        //驗證 unoGame start 會有什麼狀態 ?
+        givenFourPlayersJoinUnoGame(4);
 
         unoGame.start();
 
-        //順時鐘、
         assertNull(unoGame.getGameState().getDirection());
         assertFalse(unoGame.getGameState().isSkip());
         assertEquals(0, unoGame.getGameState().getDrawCardsAmount());
-        assertNull(unoGame.getGameState().getColor());
+        assertNull(unoGame.getGameState().getTopCardColor());
     }
 
-
-    //遊戲開始後 決定輪流順順序 抽牌 由數字最大的開始 順位為1  其餘順位
-
-    //p1   7
-    //p2   5
-    //p3   3
-    //p4   2
-    // 比數字大小
-    // 只能是數字牌 我只給他 0-9的數字牌堆抽就好了呀
-
-
-    //所以甚至初始化不需要建立 deck standard108cards  等決定完誰先開始  正是開始遊戲再建立 standard108Cards
     @Test
-    public void givenUnoGameStartFourPlayersDrawNumberCards0To9_whenDecideFirstPlayer_thenNumberCardsShouldBeBiggest() {
-        List<Player> expectedPlayers = generatePlayers(4);
-        joinGame(expectedPlayers);
-        unoGame.start();
-        List<TurnMove> turnMoves = unoGame.getTurnMove();
-        unoGame.drawCard(1);
-        for (Player player : unoGame.getPlayers()) {
-            NumberCard card = (NumberCard) player.getHandCards().get(0);
-            TurnMove turnMove = new TurnMove(player, card);
-            turnMoves.add(turnMove);
-        }
+    public void givenUnoGameStart_whenDecideFirstPlayer_thenNumberCardsShouldBeBiggest() {
+        givenUnoGameStart();
 
-        //抽牌比大小
-        Player expectedFirstPlayer = max(turnMoves, comparing(TurnMove::getNumberCard)).getPlayer();
+        Player firstPlayer = unoGame.decideFirstPlayer();
 
-        assertEquals(expectedFirstPlayer, unoGame.decideFirstPlayer());
+        assertEquals(expectedFirstPlayer(), firstPlayer);
     }
 
+    @Test
+    public void whenDealFirstCardIsReverseCard_thenGameStateDirectionShouldBeCounterclockwise() {
+        Card redReverseCard = new ReverseCard(Color.RED);
+        unoGame.dealFirstCard(redReverseCard);
 
-    // 第一張卡如果是 reverseCard 就逆時鐘開始
+        assertEquals(COUNTERCLOCKWISE, unoGame.getGameState().getDirection());
+    }
 
+    @Test
+    public void whenDealFirstCard_thenGameStateDirectionShouldBeClockwise() {
+
+        List<Card> excludeReverseAndWildDrawFourCards = Arrays.asList(
+                new NumberCard(Color.RED, Number.ONE),
+                new SkipCard(Color.RED),
+                new DrawTwoCard(Color.RED),
+                new WildCard());
+
+        for (Card card : excludeReverseAndWildDrawFourCards) {
+            unoGame.dealFirstCard(card);
+
+            assertEquals(CLOCKWISE, unoGame.getGameState().getDirection());
+        }
+    }
+
+    @Test
+    public void whenDealFirstCardIsWildDrawFourCard_thenShouldFail() {
+        assertThrows(IllegalStateException.class, () -> unoGame.dealFirstCard(new WildDrawFourCard()));
+    }
 
     private void joinGame(List<Player> expectedPlayers) {
         expectedPlayers.forEach(unoGame::join);
     }
-
 
     private List<Player> generatePlayers(int numberOfPlayers) {
         List<Player> players = new ArrayList<>();
@@ -110,4 +100,18 @@ class UnoGameTest {
         return players;
     }
 
+    private void givenFourPlayersJoinUnoGame(int numberOfPlayers) {
+        List<Player> expectedPlayers = generatePlayers(numberOfPlayers);
+        joinGame(expectedPlayers);
+    }
+
+    private void givenUnoGameStart() {
+        givenFourPlayersJoinUnoGame(4);
+        unoGame.start();
+    }
+
+    private Player expectedFirstPlayer() {
+        List<TurnMove> turnMoves = unoGame.getTurnMoves();
+        return max(turnMoves, comparing(TurnMove::getNumberCard)).getPlayer();
+    }
 }

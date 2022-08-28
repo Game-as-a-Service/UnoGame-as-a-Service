@@ -10,7 +10,7 @@ class DeckTest {
 
     private static final int EACH_NON_ZERO_COLOR_CARDS_AMOUNT = 2;
     private static final int EACH_WILD_CARDS_AND_WILD_DRAW_FOUR_CARDS_AMOUNT = 4;
-    private  Deck deck;
+    private Deck deck;
 
     @BeforeEach
     void init() {
@@ -19,11 +19,11 @@ class DeckTest {
 
     @Test
     public void whenGetStandard108Cards_thenEachColorShouldHave19NumberCards() {
-        int EACH_COLOR_NUMBER_CARDS_AMOUNT = 19;
-        assertEquals(EACH_COLOR_NUMBER_CARDS_AMOUNT, getNumberCardColorCounts(RED));
-        assertEquals(EACH_COLOR_NUMBER_CARDS_AMOUNT, getNumberCardColorCounts(YELLOW));
-        assertEquals(EACH_COLOR_NUMBER_CARDS_AMOUNT, getNumberCardColorCounts(BLUE));
-        assertEquals(EACH_COLOR_NUMBER_CARDS_AMOUNT, getNumberCardColorCounts(GREEN));
+        int eachColorNumberCardsAmount = 19;
+        assertEquals(eachColorNumberCardsAmount, getNumberCardColorCounts(RED));
+        assertEquals(eachColorNumberCardsAmount, getNumberCardColorCounts(YELLOW));
+        assertEquals(eachColorNumberCardsAmount, getNumberCardColorCounts(BLUE));
+        assertEquals(eachColorNumberCardsAmount, getNumberCardColorCounts(GREEN));
     }
 
     @Test
@@ -47,7 +47,6 @@ class DeckTest {
         }
     }
 
-
     @Test
     public void whenGetStandard108Cards_thenShouldHave4WildCards() {
         assertEquals(EACH_WILD_CARDS_AND_WILD_DRAW_FOUR_CARDS_AMOUNT, getWildCardsOrWildDrawFourCardsCounts(WildCard.class));
@@ -58,20 +57,20 @@ class DeckTest {
         assertEquals(EACH_WILD_CARDS_AND_WILD_DRAW_FOUR_CARDS_AMOUNT, getWildCardsOrWildDrawFourCardsCounts(WildDrawFourCard.class));
     }
 
-    private Long getWildCardsOrWildDrawFourCardsCounts(Class cardClass) {
+    private Long getWildCardsOrWildDrawFourCardsCounts(Class<? extends Card> cardClass) {
         return deck.stream()
                 .filter(cardClass::isInstance)
-                .map(cardClass::cast).count();
+                .map(cardClass::cast)
+                .count();
     }
-
 
     private long getColorCardsCounts(Color color, Class<? extends ColorCard> cardClass) {
         return deck.stream()
                 .filter(cardClass::isInstance)
                 .map(cardClass::cast)
-                .filter(colorCard -> colorCard.getColor() == color).count();
+                .filter(colorCard -> colorCard.getColor() == color)
+                .count();
     }
-
 
     private long getNumberCardColorCounts(Color color) {
         return deck.stream()
@@ -80,6 +79,4 @@ class DeckTest {
                 .filter(numberCard -> numberCard.getColor() == color)
                 .count();
     }
-
-
 }

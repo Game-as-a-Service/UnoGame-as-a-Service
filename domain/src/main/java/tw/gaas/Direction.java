@@ -1,5 +1,5 @@
 package tw.gaas;
 
 public enum Direction {
-    CLOCKWISE;
+    CLOCKWISE, COUNTERCLOCKWISE
 }
